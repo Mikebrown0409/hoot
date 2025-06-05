@@ -11,18 +11,15 @@ async function create(req, res) {
   try {
     req.body.author = req.user._id;
     const hoot = await Hoot.findById(req.params.hootId);
-
-    // Add the comment to the hoot
     hoot.comments.push(req.body);
     await hoot.save();
 
-    // Get the newly created comment
+    // Find the newly created comment:
     const newComment = hoot.comments[hoot.comments.length - 1];
 
-    // Populate the author for the entire comments array
-    await hoot.populate("comments.author");
+    newComment._doc.author = req.user;
 
-    // Respond with the populated comment:
+    // Respond with the newComment:
     res.status(201).json(newComment);
   } catch (err) {
     res.status(500).json({ err: err.message });
