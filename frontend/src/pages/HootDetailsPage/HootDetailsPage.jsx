@@ -2,9 +2,8 @@ import { useParams } from "react-router";
 import { useEffect, useState, useContext } from "react";
 import * as hootService from "../../services/hootService";
 import CommentForm from "../../components/CommentForm/CommentForm";
-import { UserContext } from "../../contexts/UserContext";
 
-function HootDetailsPage() {
+function HootDetailsPage(props) {
   const [hoot, setHoot] = useState(null);
   const { hootId } = useParams();
 
@@ -33,8 +32,13 @@ function HootDetailsPage() {
           <h1>{hoot.title}</h1>
           <p>
             {`${hoot.author.name} posted on
-            ${new Date(hoot.createdAt).toLocaleDateString()}`}
+              ${new Date(hoot.createdAt).toLocaleDateString()}`}
           </p>
+          {hoot.author._id === props.user._id && (
+            <>
+              <button>Delete</button>
+            </>
+          )}
         </header>
         <p>{hoot.text}</p>
       </section>

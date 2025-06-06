@@ -44,7 +44,7 @@ export default function App() {
             <Route path="/hoots" element={<HootListPage hoots={hoots} />} />
             <Route
               path="/hoots/:hootId"
-              element={<HootDetailsPage hoots={hoots} />}
+              element={<HootDetailsPage hoots={hoots} user={user} />}
             />
             <Route
               path="/hoots/new"
