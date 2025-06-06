@@ -10,7 +10,9 @@ module.exports = {
 
 async function index(req, res) {
   try {
-    const hoots = await Hoot.find({});
+    const hoots = await Hoot.find({})
+      .populate("author")
+      .populate("comments.author");
     // Below would return all hoots for just the logged in user
     // const hoots = await Hoot.find({author: req.user._id});
     res.json(hoots);
@@ -34,7 +36,9 @@ async function create(req, res) {
 
 async function show(req, res) {
   try {
-    const hoot = await Hoot.findById(req.params.hootId).populate("author");
+    const hoot = await Hoot.findById(req.params.hootId)
+      .populate("author")
+      .populate("comments.author");
     res.json(hoot);
   } catch (err) {
     console.log(err);
